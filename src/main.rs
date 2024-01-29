@@ -27,6 +27,7 @@ fn main() {
             let data = data.trim();
             let func_to_run = match day {
                 1 => advent_of_code_2023::day_1::solve,
+                2 => advent_of_code_2023::day_2::solve,
                 _ => unreachable!(),
             };
             func_to_run(data);
