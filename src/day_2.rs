@@ -1,4 +1,5 @@
 use std::cmp::max;
+use crate::helper as helper;
 
 #[derive(Debug)]
 struct SubGame {
@@ -70,26 +71,10 @@ fn get_max_cubes_needed_for_valid_game(curr_game: &GameInfo) -> SubGame {
 
 fn parse_game_info(line: &str) -> GameInfo {
     let line_substr: Vec<_> = line.split(":").collect();
-    let game_id: Vec<u32> = get_num_arr_from_str(line_substr[0]);
+    let game_id: Vec<u32> = helper::filter_digits_from_str(line_substr[0]);
     let games: Vec<_> = line_substr[1].split(";").collect();
     let sub_games: Vec<SubGame> = parse_sub_games(games);
-    GameInfo { id: convert_num_arr_to_num(game_id), sub_games }
-}
-
-
-fn convert_num_arr_to_num(arr: Vec<u32>) -> u32 {
-    let mut num = 0;
-    for curr in arr {
-        num = num * 10 + curr
-    }
-    return num;
-}
-
-fn get_num_arr_from_str(string: &str) -> Vec<u32> {
-    string.chars()
-        .filter(|x| x.is_digit(10))
-        .map(|x| x.to_digit(10).unwrap())
-        .collect()
+    GameInfo { id: helper::convert_num_arr_to_num(game_id), sub_games }
 }
 
 fn parse_sub_games(games: Vec<&str>) -> Vec<SubGame> {
@@ -102,14 +87,14 @@ fn parse_sub_games(games: Vec<&str>) -> Vec<SubGame> {
             red: 0,
         };
         for ball in balls_info {
-            let count_of_ball: Vec<u32> = get_num_arr_from_str(ball);
+            let count_of_ball: Vec<u32> = helper::filter_digits_from_str(ball);
             let color_of_ball: String = ball.chars()
                 .filter(|x| x.is_ascii_alphabetic())
                 .collect();
             match color_of_ball.as_str() {
-                "green" => sub_game.green = convert_num_arr_to_num(count_of_ball),
-                "blue" => sub_game.blue = convert_num_arr_to_num(count_of_ball),
-                "red" => sub_game.red = convert_num_arr_to_num(count_of_ball),
+                "green" => sub_game.green = helper::convert_num_arr_to_num(count_of_ball),
+                "blue" => sub_game.blue = helper::convert_num_arr_to_num(count_of_ball),
+                "red" => sub_game.red = helper::convert_num_arr_to_num(count_of_ball),
                 _ => unreachable!()
             }
         }
