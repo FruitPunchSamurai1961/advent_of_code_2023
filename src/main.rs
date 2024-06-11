@@ -34,6 +34,7 @@ fn main() {
                 6 => advent_of_code_2023::day_6::solve,
                 7 => advent_of_code_2023::day_7::solve,
                 8 => advent_of_code_2023::day_8::solve,
+                9 => advent_of_code_2023::day_9::solve,
                 _ => unreachable!(),
             };
             func_to_run(data);
