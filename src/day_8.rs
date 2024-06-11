@@ -112,7 +112,7 @@ fn get_node_mapping_from_input(input: &str) -> HashMap<String, Rc<RefCell<Node>>
 
 
 fn get_min_steps_to_end_from_vector(sequence: &str, node_mapping: &HashMap<String, Rc<RefCell<Node>>>) -> u64 {
-    let mut initial_vec = get_initial_vec(node_mapping);
+    let initial_vec = get_initial_vec(node_mapping);
     let mut path_lengths = Vec::new();
 
     for node in initial_vec.iter() {
@@ -162,14 +162,6 @@ fn get_path_len(start_node: &Rc<RefCell<Node>>, sequence: &str) -> u64 {
         if current_node.borrow().name.ends_with('Z') {
             return steps;
         }
-    }
-}
-
-fn get_next_node(current: &Rc<RefCell<Node>>, step: char) -> Option<Rc<RefCell<Node>>> {
-    match step {
-        'L' => current.borrow().left.as_ref()?.upgrade(),
-        'R' => current.borrow().right.as_ref()?.upgrade(),
-        _ => None,
     }
 }
 
